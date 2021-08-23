@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css"
+          integrity="sha384-cLRrMq39HOZdvE0j6yBojO4+1PrHfB7a9l5qLcmRm/fiWXYY+CndJPmyu5FV/9Tw" crossorigin="anonymous"/>
+    <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"
+            integrity="sha384-gCMZcshYKOGRX9r6wbDrvF+TcCCswSHFucUzUPwka+Gr+uHgjlYvkABr95TCOz3A"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>var $ = mdui.$;</script>
+</head>
+<body class="mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-dark">
+    <div id="app" class="mdui-container">
+        <div class="row">
+            <div class="mdui-col-md-4 mdui-col-offset-md-4 mdui-col-sm-6 mdui-col-offset-sm-3 mdui-m-t-5">
+                <form action="/login" method="post">
+                    <h1 class="mdui-text-center">${title}</h1>
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">Account</label>
+                        <input class="mdui-textfield-input" type="text" name="account"/>
+                    </div>
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">Password</label>
+                        <input class="mdui-textfield-input" type="password" name="password"/>
+                    </div>
+                    <button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-m-t-2" type="submit">登录</button>
+
+                    {% if result %}
+                        <p class="mdui-text-color-red-400 mdui-text-center mdui-m-t-3">{{result}}</p>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="mdui-col-md-4 mdui-col-offset-md-4 mdui-col-sm-6 mdui-col-offset-sm-3 mdui-m-t-3">
+                <button class="mdui-btn mdui-btn-block mdui-color-blue" @click="testGet">Get请求</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="mdui-col-md-4 mdui-col-offset-md-4 mdui-col-sm-6 mdui-col-offset-sm-3 mdui-m-t-3">
+                <button class="mdui-btn mdui-btn-block mdui-color-green" @click="testPost">Post请求</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        var vm = new Vue({
+            delimiters: ['${', '}'],
+            el: '#app',
+            data: {
+                title: '登录',
+            },
+            methods: {
+                testGet: function () {
+                    $.ajax({
+                        url: '/testget',
+                        data: {name: 'cjl', age: 30, address: 'huizhou'},
+                        dataType: 'json',
+                        success: (data) => {
+                            console.log(data)
+                        }
+                    })
+                },
+                testPost: function () {
+                    $.ajax({
+                        url: '/testpost',
+                        method: 'post',
+                        data: {name: 'cjl', age: 30, address: 'guangzhou'},
+                        dataType: 'json',
+                        success: (data) => {
+                            console.log(data)
+                        }
+                    })
+                }
+            },
+        })
+    </script>
+</body>
+</html>
